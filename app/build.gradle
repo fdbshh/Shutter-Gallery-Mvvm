@@ -25,6 +25,8 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     vectorDrawables.useSupportLibrary = true
+
+    buildConfigField 'String', 'SHUTTERSTOCK_BASE_URL', '"https://api.shutterstock.com/v2"'
   }
 
   packagingOptions {
