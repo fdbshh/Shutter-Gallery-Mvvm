@@ -1,0 +1,111 @@
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
+def versionBuild = 0
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+def androidId = System.getProperty("deviceId")
+
+android {
+  compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
+  buildToolsVersion rootProject.ext.BUILD_TOOLS_VERSION
+
+  defaultConfig {
+    applicationId "com.tramsun.shutterstock"
+
+    minSdkVersion rootProject.ext.MIN_SDK_VERSION
+    targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+
+    versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+    versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    vectorDrawables.useSupportLibrary = true
+  }
+
+  packagingOptions {
+    exclude 'META-INF/LICENSE.txt'
+    exclude 'META-INF/NOTICE.txt'
+    exclude 'LICENSE.txt'
+  }
+
+  dataBinding {
+    enabled = true
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+
+/** ======= Unlock phone when running Instrumentation tests - BEGIN ======= */
+if (androidId != null) {
+  preBuild.dependsOn 'sendPowerCommand'
+}
+
+task sendPowerCommand(type: Exec) {
+  def rootDir = project.rootDir
+  def localProperties = new File(rootDir, "local.properties")
+  Properties properties = new Properties()
+  localProperties.withInputStream { instr -> properties.load(instr)
+  }
+  def sdkDir = properties.getProperty('sdk.dir')
+  def adb = "$sdkDir/platform-tools/adb"
+  commandLine "$adb", "-s", "$androidId", "shell", "input", "keyevent", "26"
+}
+/** ======= Unlock phone when running Instrumentation tests - END ======= */
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+
+  // Android Support Libs
+  compile "com.android.support:support-v13:${rootProject.ext.SUPPORT_LIB_VERSION}"
+  compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIB_VERSION}"
+  compile "com.android.support:design:${rootProject.ext.SUPPORT_LIB_VERSION}"
+
+  //Dagger 2
+  compile 'com.google.dagger:dagger:2.8'
+  apt 'com.google.dagger:dagger-compiler:2.8'
+  apt 'com.google.guava:guava:21.0'
+
+  // Retrofit
+  compile "com.squareup.retrofit2:retrofit:${rootProject.ext.RETROFIT_VERSION}"
+  compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.RETROFIT_VERSION}"
+  compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.RETROFIT_VERSION}"
+
+  // OkHttp
+  compile "com.squareup.okhttp3:okhttp:${rootProject.ext.OKHTTP_VERSION}"
+  compile "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.OKHTTP_VERSION}"
+
+  // RxJava
+  compile "io.reactivex:rxjava:${rootProject.ext.RXJAVA_VERSION}"
+  compile "io.reactivex:rxandroid:${rootProject.ext.RXANDROID_VERSION}"
+
+  // Marshmallow Permissions
+  compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+
+  // Image Loading
+  compile 'com.squareup.picasso:picasso:2.5.2'
+
+  // Logging
+  compile "com.jakewharton.timber:timber:${rootProject.ext.TIMBER_VERSION}"
+
+  testCompile 'junit:junit:4.12'
+
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  testCompile 'junit:junit:4.12'
+}
