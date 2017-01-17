@@ -9,5 +9,5 @@ import rx.Single;
 public interface ShutterstockApi {
   @GET("images/search") Single<ShutterImages> getImages(
       @Header("Authorization") String authorization, @Query("page") int page,
-      @Query("per_Page") int perPage);
+      @Query("per_page") int perPage);
 }

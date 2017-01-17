@@ -26,7 +26,9 @@ android {
 
     vectorDrawables.useSupportLibrary = true
 
-    buildConfigField 'String', 'SHUTTERSTOCK_BASE_URL', '"https://api.shutterstock.com/v2"'
+    buildConfigField 'String', 'SHUTTERSTOCK_BASE_URL', '"https://api.shutterstock.com/v2/"'
+    buildConfigField 'String', 'SHUTTERSTOCK_CLIENT_ID', '"9ffeec2da7b3d7fe9bb7"'
+    buildConfigField 'String', 'SHUTTERSTOCK_SECRET', '"a60e9ce8bc2d3b5a23c1ab5d2f425e9fc103f574"'
   }
 
   packagingOptions {
@@ -100,6 +102,12 @@ dependencies {
 
   // Image Loading
   compile 'com.squareup.picasso:picasso:2.5.2'
+
+  // Rich ImageView
+  compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
+
+  // Infinite Scrolling
+  compile 'com.github.pwittchen:infinitescroll:0.0.1'
 
   // Logging
   compile "com.jakewharton.timber:timber:${rootProject.ext.TIMBER_VERSION}"

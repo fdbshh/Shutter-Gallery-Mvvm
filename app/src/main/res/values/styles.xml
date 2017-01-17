@@ -20,16 +20,6 @@
 
   <style name="AppTheme" parent="AppThemeBase"/>
 
-  <style name="CenterCircleProgressTheme" parent="android:Theme.Holo.Dialog">
-    <item name="android:alertDialogStyle">@style/TransparentAlertDialogStyle</item>
-    <item name="android:windowBackground">@color/transparent</item>
-    <item name="android:textColorPrimary">#FFFFFF</item>
-    <item name="android:backgroundDimEnabled">false</item>
-    <item name="android:textColor">#FFFFFF</item>
-    <item name="android:textStyle">normal</item>
-    <item name="android:textSize">12sp</item>
-  </style>
-
   <style name="TransparentAlertDialogStyle">
     <item name="android:bottomBright">@color/transparent</item>
     <item name="android:bottomDark">@color/transparent</item>
@@ -41,6 +31,10 @@
     <item name="android:fullDark">@color/transparent</item>
     <item name="android:topBright">@color/transparent</item>
     <item name="android:topDark">@color/transparent</item>
+  </style>
+
+  <style name="LightAccent">
+    <item name="colorAccent">@color/primary_light</item>
   </style>
 
 </resources>

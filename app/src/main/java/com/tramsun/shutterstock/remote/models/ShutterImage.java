@@ -1,8 +1,9 @@
 package com.tramsun.shutterstock.remote.models;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class ShutterImage {
+public class ShutterImage implements Serializable {
 
   @SerializedName("id") private String id;
   @SerializedName("aspect") private Double aspect;

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+  <data class="ImagesActivityBinding">
+    <variable
+        name="viewModel"
+        type="com.tramsun.shutterstock.feature.images.ImagesViewModel"
+        />
+  </data>
+
+  <RelativeLayout
+      android:id="@+id/images_list_container"
+      android:layout_width="match_parent"
+      android:background="@android:color/white"
+      android:layout_height="match_parent"
+      >
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:visibility="gone"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/images_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/progress_bar"
+        android:scrollbars="vertical"
+        android:visibility="visible"
+        />
+  </RelativeLayout>
+</layout>

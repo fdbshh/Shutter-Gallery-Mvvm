@@ -1,8 +1,9 @@
 package com.tramsun.shutterstock.remote.models;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
-public class LargeThumb {
+public class LargeThumb implements Serializable {
 
   @SerializedName("height") private Integer height;
   @SerializedName("url") private String url;

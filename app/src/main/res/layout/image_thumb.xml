@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+  <data class="ImageThumbBinding">
+    <variable
+        name="loading"
+        type="boolean"
+        />
+    <import type="android.view.View"/>
+  </data>
+  <com.tramsun.shutterstock.ui.SquareFrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+    <ImageView
+        android:id="@+id/image_thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider"
+        android:scaleType="centerCrop"
+        />
+
+    <ProgressBar
+        android:id="@+id/image_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="@{loading ? View.VISIBLE : View.GONE}"
+        style="@android:style/Widget.ProgressBar.Small"
+        />
+  </com.tramsun.shutterstock.ui.SquareFrameLayout>
+</layout>
