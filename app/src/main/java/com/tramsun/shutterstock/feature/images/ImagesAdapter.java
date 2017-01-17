@@ -5,22 +5,47 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import com.tramsun.shutterstock.R;
 import com.tramsun.shutterstock.databinding.ImageThumbBinding;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import timber.log.Timber;
 
-class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
+class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.BaseViewHolder> {
+  private static final int TYPE_ITEM = 0;
+  private static final int TYPE_FOOTER = 1;
+
   private final OnImageClicked listener;
+  private final Picasso picasso;
   private LayoutInflater inflater;
 
-  private final Picasso picasso;
-  private List<ShutterImage> images;
+  private List<ShutterImage> images = new ArrayList<>();
+  private final ShutterImage loader = new ShutterImage();
 
-  public interface OnImageClicked {
+  private AtomicBoolean isPreviewLoadInProgress = new AtomicBoolean(false);
+
+  void showProgressBar(boolean show) {
+    if (show) {
+      images.add(loader);
+      notifyItemInserted(images.size() - 1);
+    } else {
+      images.remove(loader);
+      notifyItemRemoved(images.size());
+    }
+  }
+
+  int getSpanSize(int gridSpan, int position) {
+    return getItemViewType(position) == TYPE_FOOTER ? gridSpan : 1;
+  }
+
+  interface OnImageClicked {
     void onImageClicked(ShutterImage image, ImageView imageView, Bitmap bitmap);
 
     void onImageFailed();
@@ -29,7 +54,7 @@ class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
   ImagesAdapter(OnImageClicked listener, Picasso picasso, @NonNull List<ShutterImage> images) {
     this.listener = listener;
     this.picasso = picasso;
-    this.images = images;
+    this.images.addAll(images);
   }
 
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -39,26 +64,52 @@ class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
   }
 
   public void setImages(List<ShutterImage> images) {
-    this.images = images;
+    int prevSize = this.images.size();
+
+    this.images.clear();
+    this.images.addAll(images);
+
+    notifyItemRangeInserted(prevSize, images.size() - 1);
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ViewHolder(ImageThumbBinding.inflate(inflater, parent, false));
+  @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    if (viewType == TYPE_FOOTER) {
+      return new BaseViewHolder(inflater.inflate(R.layout.progress_item, parent, false));
+    } else {
+      return new ItemViewHolder(ImageThumbBinding.inflate(inflater, parent, false));
+    }
   }
 
-  @Override public void onBindViewHolder(ViewHolder holder, int position) {
+  @Override public int getItemViewType(int position) {
+    if (images.get(position) == loader) {
+      return TYPE_FOOTER;
+    } else {
+      return TYPE_ITEM;
+    }
+  }
+
+  @Override public void onBindViewHolder(BaseViewHolder holder, int position) {
     ShutterImage image = images.get(position);
 
-    picasso.load(image.getAssets().getLargeThumb().getUrl()).into(holder.binding.imageThumb);
+    if (getItemViewType(position) == TYPE_ITEM) {
+      ImageThumbBinding binding = ((ItemViewHolder) holder).binding;
+      picasso.load(image.getAssets().getLargeThumb().getUrl()).into(binding.imageThumb);
 
-    holder.itemView.setOnClickListener(v -> onImageClicked(holder.binding, image));
+      holder.itemView.setOnClickListener(v -> onImageClicked(binding, image));
+    }
   }
 
   private void onImageClicked(ImageThumbBinding binding, ShutterImage image) {
+    if (isPreviewLoadInProgress.getAndSet(true)) {
+      Timber.d("onImageClicked: Load in progress. Ignore click");
+      return;
+    }
+
     Target target = new Target() {
       private void onComplete() {
         binding.setLoading(false);
         binding.imageThumb.setTag(null);
+        isPreviewLoadInProgress.set(false);
       }
 
       @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -84,11 +135,18 @@ class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder> {
     return images.size();
   }
 
-  class ViewHolder extends RecyclerView.ViewHolder {
+  class BaseViewHolder extends RecyclerView.ViewHolder {
+
+    BaseViewHolder(View itemView) {
+      super(itemView);
+    }
+  }
+
+  class ItemViewHolder extends BaseViewHolder {
 
     private final ImageThumbBinding binding;
 
-    ViewHolder(ImageThumbBinding binding) {
+    ItemViewHolder(ImageThumbBinding binding) {
       super(binding.getRoot());
       this.binding = binding;
     }
