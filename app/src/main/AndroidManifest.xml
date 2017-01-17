@@ -19,10 +19,8 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".feature.images.ImagesActivity">
-    </activity>
-    <activity android:name=".feature.detail.ImageDetailActivity">
-    </activity>
+    <activity android:name=".feature.images.ImagesActivity"/>
+    <activity android:name=".feature.detail.ImageDetailActivity"/>
   </application>
 
 </manifest>
