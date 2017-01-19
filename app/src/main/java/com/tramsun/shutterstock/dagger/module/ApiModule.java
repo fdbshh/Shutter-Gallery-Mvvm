@@ -1,7 +1,8 @@
 package com.tramsun.shutterstock.dagger.module;
 
-import android.app.Application;
+import android.content.Context;
 import com.tramsun.shutterstock.BuildConfig;
+import com.tramsun.shutterstock.dagger.qualifier.ApplicationContext;
 import com.tramsun.shutterstock.remote.ShutterApi;
 import dagger.Module;
 import dagger.Provides;
@@ -20,8 +21,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
   private static final String RESPONSE_CACHE_DIRECTORY = "response_cache";
   private static final long CACHE_SIZE = 10 * 1024 * 1024;
 
-  @Provides @Singleton OkHttpClient provideOkHttpClient(Application app) {
-    File responseCacheDirectory = new File(app.getCacheDir(), RESPONSE_CACHE_DIRECTORY);
+  @Provides @Singleton OkHttpClient provideOkHttpClient(@ApplicationContext Context context) {
+    File responseCacheDirectory = new File(context.getCacheDir(), RESPONSE_CACHE_DIRECTORY);
     Cache cache = new Cache(responseCacheDirectory, CACHE_SIZE);
 
     OkHttpClient.Builder builder =
@@ -48,7 +49,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         .build();
   }
 
-  @Provides @Singleton ShutterApi provideShutterstockApi(Retrofit retrofit) {
+  @Provides @Singleton ShutterApi provideShutterApi(Retrofit retrofit) {
     return retrofit.create(ShutterApi.class);
   }
 }

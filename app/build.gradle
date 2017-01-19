@@ -27,8 +27,6 @@ android {
     vectorDrawables.useSupportLibrary = true
 
     buildConfigField 'String', 'SHUTTERSTOCK_BASE_URL', '"https://api.shutterstock.com/v2/"'
-    buildConfigField 'String', 'SHUTTERSTOCK_CLIENT_ID', '"9ffeec2da7b3d7fe9bb7"'
-    buildConfigField 'String', 'SHUTTERSTOCK_SECRET', '"a60e9ce8bc2d3b5a23c1ab5d2f425e9fc103f574"'
   }
 
   packagingOptions {
@@ -112,10 +110,12 @@ dependencies {
   // Logging
   compile "com.jakewharton.timber:timber:${rootProject.ext.TIMBER_VERSION}"
 
+  testApt 'com.google.dagger:dagger-compiler:2.8'
   testCompile 'junit:junit:4.12'
+  testCompile 'org.mockito:mockito-core:2.6.3'
+  testCompile "com.google.truth:truth:0.31"
 
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  testCompile 'junit:junit:4.12'
 }

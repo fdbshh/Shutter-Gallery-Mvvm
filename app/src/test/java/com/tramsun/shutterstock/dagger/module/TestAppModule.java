@@ -4,24 +4,23 @@ import android.content.Context;
 import com.squareup.picasso.Picasso;
 import com.tramsun.shutterstock.ShutterApp;
 import com.tramsun.shutterstock.dagger.qualifier.ApplicationContext;
-import com.tramsun.shutterstock.remote.OkHttp3Downloader;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
-import okhttp3.OkHttpClient;
+import org.mockito.Mockito;
 
-@Module public final class AppModule {
+@Module public final class TestAppModule {
   private final ShutterApp app;
 
-  public AppModule(ShutterApp app) {
-    this.app = app;
+  public TestAppModule() {
+    this.app = Mockito.mock(ShutterApp.class);
   }
 
   @Provides @Singleton @ApplicationContext Context provideContext() {
     return app;
   }
 
-  @Provides @Singleton Picasso providePicasso(OkHttpClient okHttpClient) {
-    return new Picasso.Builder(app).downloader(new OkHttp3Downloader(okHttpClient)).build();
+  @Provides @Singleton Picasso providePicasso() {
+    return Mockito.mock(Picasso.class);
   }
 }

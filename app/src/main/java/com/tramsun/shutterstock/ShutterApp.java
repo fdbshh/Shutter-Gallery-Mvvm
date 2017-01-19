@@ -4,7 +4,7 @@ import android.app.Application;
 import com.tramsun.shutterstock.dagger.DaggerComponentManager;
 import timber.log.Timber;
 
-public class ShutterstockApp extends Application {
+public class ShutterApp extends Application {
   @Override public void onCreate() {
     super.onCreate();
 
