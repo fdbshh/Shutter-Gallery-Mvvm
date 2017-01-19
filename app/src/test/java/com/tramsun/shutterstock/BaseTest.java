@@ -5,7 +5,6 @@ import com.tramsun.shutterstock.dagger.components.DaggerTestAppComponent;
 import com.tramsun.shutterstock.dagger.components.TestAppComponent;
 import com.tramsun.shutterstock.remote.ShutterRepository;
 import javax.inject.Inject;
-import org.junit.Before;
 
 public class BaseTest {
   private TestAppComponent testComponent;
@@ -17,7 +16,10 @@ public class BaseTest {
     testComponent.inject(this);
   }
 
-  @CallSuper @Before public void setup() {
+  @CallSuper public void setUp() {
+  }
+
+  @CallSuper public void tearDown() {
     repository.clear();
   }
 }

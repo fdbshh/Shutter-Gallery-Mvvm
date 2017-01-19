@@ -1,6 +1,7 @@
 package com.tramsun.shutterstock;
 
 import java.util.Random;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import rx.Single;
@@ -10,8 +11,12 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class RepoTest extends BaseTest {
 
-  @Before public void setup() {
-    super.setup();
+  @Before public void setUp() {
+    super.setUp();
+  }
+
+  @After public void tearDown() {
+    super.tearDown();
   }
 
   @Test public void verifyInit() throws Exception {
