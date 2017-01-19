@@ -18,13 +18,7 @@ import rx.Single;
     return repository.getImages();
   }
 
-  @Override public void detach() {
-    super.detach();
-
-    repository.clear();
-  }
-
-  public Single<Boolean> fetchNextPage() {
+  Single<Boolean> fetchNextPage() {
     return repository.fetchNextPage();
   }
 }

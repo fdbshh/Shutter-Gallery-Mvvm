@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import com.squareup.picasso.Picasso;
 import com.tramsun.shutterstock.dagger.qualifier.ApplicationContext;
+import com.tramsun.shutterstock.remote.ShutterApi;
 import com.tramsun.shutterstock.remote.ShutterRepository;
-import com.tramsun.shutterstock.remote.ShutterstockApi;
 
 interface ShareableAppComponent {
 
@@ -13,7 +13,7 @@ interface ShareableAppComponent {
 
   Resources provideResources();
 
-  ShutterstockApi provideShutterstockApi();
+  ShutterApi provideShutterstockApi();
 
   ShutterRepository provideShutterRepository();
 

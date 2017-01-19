@@ -93,7 +93,9 @@ class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.BaseViewHolder> {
 
     if (getItemViewType(position) == TYPE_ITEM) {
       ImageThumbBinding binding = ((ItemViewHolder) holder).binding;
-      picasso.load(image.getAssets().getLargeThumb().getUrl()).into(binding.imageThumb);
+      picasso.load(image.getAssets().getLargeThumb().getUrl())
+          .placeholder(R.drawable.placeholder)
+          .into(binding.imageThumb);
 
       holder.itemView.setOnClickListener(v -> onImageClicked(binding, image));
     }

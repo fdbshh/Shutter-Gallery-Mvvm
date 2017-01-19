@@ -1,6 +1,6 @@
 <resources>
 
-  <style name="AppThemeBase" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     <item name="colorPrimary">@color/primary</item>
     <item name="colorPrimaryDark">@color/primary_dark</item>
     <item name="colorAccent">@color/accent</item>
@@ -12,13 +12,8 @@
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
 
-    <!-- For launching splash without white screen -->
-    <item name="windowActionModeOverlay">true</item>
-    <item name="android:windowContentOverlay">@null</item>
-    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowBackground">@color/primary</item>
   </style>
-
-  <style name="AppTheme" parent="AppThemeBase"/>
 
   <style name="LightAccent">
     <item name="colorAccent">@color/primary_light</item>

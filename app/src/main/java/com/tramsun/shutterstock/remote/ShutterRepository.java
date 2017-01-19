@@ -15,7 +15,7 @@ import timber.log.Timber;
   private final String authorization;
   private List<ShutterImage> images = new ArrayList<>();
 
-  @Inject ShutterstockApi api;
+  @Inject ShutterApi api;
 
   private int currentPage = 0;
 
@@ -25,7 +25,7 @@ import timber.log.Timber;
   }
 
   public Single<Boolean> fetchFirstImageSet() {
-    return fetchPage(1).doOnSubscribe(() -> images.clear());
+    return fetchPage(1).doOnSubscribe(this::clear);
   }
 
   public Single<Boolean> fetchNextPage() {
@@ -33,17 +33,19 @@ import timber.log.Timber;
   }
 
   private Single<Boolean> fetchPage(int page) {
-    return api.getImages(authorization, page, AppConstants.PER_PAGE_SIZE).map(shutterImages -> {
-      // To ignore multiple responses for a single page request
-      if (currentPage + 1 == page) {
-        currentPage = page;
-        images.addAll(shutterImages.getData());
-      }
-      return true;
-    }).onErrorReturn(e -> {
-      Timber.e(e);
-      return false;
-    });
+    return api.getImages(authorization, page, AppConstants.PER_PAGE_SIZE)
+        // Try for 3 times, then give up
+        .retry(2).map(shutterImages -> {
+          // To ignore multiple responses for a single page request
+          if (currentPage + 1 == page) {
+            currentPage = page;
+            images.addAll(shutterImages.getData());
+          }
+          return true;
+        }).onErrorReturn(e -> {
+          Timber.e(e);
+          return false;
+        });
   }
 
   public List<ShutterImage> getImages() {

@@ -40,7 +40,7 @@ public class ImagesActivity extends BaseActivity<ImagesActivityBinding, ImagesVi
   }
 
   private void setupRecyclerView() {
-    gridSpan = 3;
+    gridSpan = getResources().getInteger(R.integer.grid_span);
 
     adapter = new ImagesAdapter(this, picasso, viewModel.getImages());
 

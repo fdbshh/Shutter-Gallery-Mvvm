@@ -10,10 +10,6 @@ import com.tramsun.shutterstock.feature.base.BaseActivity;
 
 public class LaunchActivity extends BaseActivity<LaunchActivityBinding, LaunchViewModel> {
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
-
   @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
 

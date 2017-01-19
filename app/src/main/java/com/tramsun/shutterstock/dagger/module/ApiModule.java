@@ -2,7 +2,7 @@ package com.tramsun.shutterstock.dagger.module;
 
 import android.app.Application;
 import com.tramsun.shutterstock.BuildConfig;
-import com.tramsun.shutterstock.remote.ShutterstockApi;
+import com.tramsun.shutterstock.remote.ShutterApi;
 import dagger.Module;
 import dagger.Provides;
 import java.io.File;
@@ -16,7 +16,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module public final class ApiModule {
-  private static final int NETWORK_REQUEST_TIMEOUT_SECONDS = 10;
+  private static final int NETWORK_REQUEST_TIMEOUT_SECONDS = 5;
   private static final String RESPONSE_CACHE_DIRECTORY = "response_cache";
   private static final long CACHE_SIZE = 10 * 1024 * 1024;
 
@@ -48,7 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         .build();
   }
 
-  @Provides @Singleton ShutterstockApi provideShutterstockApi(Retrofit retrofit) {
-    return retrofit.create(ShutterstockApi.class);
+  @Provides @Singleton ShutterApi provideShutterstockApi(Retrofit retrofit) {
+    return retrofit.create(ShutterApi.class);
   }
 }
