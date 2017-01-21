@@ -52,7 +52,7 @@
           android:layout_marginTop="32dp"
           android:indeterminate="true"
           android:theme="@style/LightAccent"
-          android:visibility="@{viewModel.progressBarVisible}"
+          android:visibility="@{viewModel.progressBarVisibility}"
           app:theme="@style/LightAccent"
           />
     </LinearLayout>

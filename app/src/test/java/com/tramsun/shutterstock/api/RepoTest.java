@@ -1,5 +1,6 @@
-package com.tramsun.shutterstock;
+package com.tramsun.shutterstock.api;
 
+import com.tramsun.shutterstock.AppConstants;
 import java.util.Random;
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +10,7 @@ import rx.observers.TestSubscriber;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class RepoTest extends BaseTest {
+public class RepoTest extends BaseApiTest {
 
   @Before public void setUp() {
     super.setUp();
@@ -49,8 +50,12 @@ public class RepoTest extends BaseTest {
     Single<Boolean> call = repository.fetchNextPage();
     int n = new Random(System.currentTimeMillis()).nextInt(5);
 
+    final int[] successCnt = { 0 };
     for (int i = 0; i < n; i++) {
-      call = call.flatMap(success -> repository.fetchNextPage());
+      call = call.flatMap(success -> {
+        successCnt[0] += success ? 1 : 0;
+        return repository.fetchNextPage();
+      });
     }
 
     TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
@@ -59,9 +64,10 @@ public class RepoTest extends BaseTest {
 
     testSubscriber.assertNoErrors();
     testSubscriber.assertCompleted();
-    testSubscriber.assertValue(true);
+    Boolean lastCallSuccess = testSubscriber.getOnNextEvents().get(0);
+    successCnt[0] += lastCallSuccess ? 1 : 0;
 
     assertThat(repository.getImages()).isNotEmpty();
-    assertThat(repository.getImages()).hasSize(AppConstants.PER_PAGE_SIZE * (n + 2));
+    assertThat(repository.getImages()).hasSize(AppConstants.PER_PAGE_SIZE * (successCnt[0] + 1));
   }
 }

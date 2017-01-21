@@ -16,8 +16,8 @@ import com.tramsun.shutterstock.feature.detail.ImageDetailActivity;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
 import com.tramsun.shutterstock.ui.GridSpacingItemDecoration;
 import com.tramsun.shutterstock.utils.rx.BgSingleOperation;
-import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
+import rx.Single;
 import rx.Subscription;
 import timber.log.Timber;
 
@@ -28,7 +28,6 @@ public class ImagesActivity extends BaseActivity<ImagesActivityBinding, ImagesVi
 
   private GridLayoutManager layoutManager;
   private ImagesAdapter adapter;
-  private AtomicBoolean fetchInProgress = new AtomicBoolean(false);
 
   @Inject Picasso picasso;
   private int gridSpan;
@@ -66,30 +65,30 @@ public class ImagesActivity extends BaseActivity<ImagesActivityBinding, ImagesVi
     imagesList.addOnScrollListener(new InfiniteScrollListener(PER_PAGE_SIZE, layoutManager) {
       @Override public void onScrolledToEnd(final int firstVisibleItemPosition) {
 
-        if (fetchInProgress.getAndSet(true)) {
+        Single<Boolean> call = viewModel.fetchNextPage();
+
+        if (call == null) {
           Timber.d("onScrolledToEnd: Loading in progress. Do Nothing");
           return;
         }
 
-        binding.imagesList.post(() -> {
-          adapter.showProgressBar(true);
-          Subscription subscription =
-              viewModel.fetchNextPage().compose(new BgSingleOperation<>()).subscribe(success -> {
-                fetchInProgress.set(false);
+        Subscription subscription = call.compose(new BgSingleOperation<>())
+            .doOnSubscribe(() -> adapter.showProgressBar(true))
+            .doAfterTerminate(() -> adapter.showProgressBar(false))
+            .subscribe(success -> onFetchDataCompleted(success, firstVisibleItemPosition));
 
-                adapter.showProgressBar(false);
-                if (success) {
-                  adapter.setImages(viewModel.getImages());
-                  binding.imagesList.scrollToPosition(firstVisibleItemPosition + gridSpan);
-                } else {
-                  ui.showSnackBar(R.string.failed_to_fetch_images);
-                }
-              });
-
-          subscriptions.add(subscription);
-        });
+        subscriptions.add(subscription);
       }
     });
+  }
+
+  private void onFetchDataCompleted(boolean success, int firstVisibleItemPosition) {
+    if (success) {
+      adapter.setImages(viewModel.getImages());
+      binding.imagesList.scrollToPosition(firstVisibleItemPosition + gridSpan);
+    } else {
+      ui.showSnackBar(R.string.failed_to_fetch_images);
+    }
   }
 
   @Override protected int layoutId() {

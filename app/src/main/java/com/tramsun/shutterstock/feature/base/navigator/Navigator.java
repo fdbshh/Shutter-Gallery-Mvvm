@@ -40,7 +40,7 @@ public abstract class Navigator {
     getActivity().startActivity(new Intent(action, uri));
   }
 
-  public final void startActivity(@NonNull Class<? extends Activity> activityClass) {
+  public void startActivity(@NonNull Class<? extends Activity> activityClass) {
     startActivity(activityClass, null);
   }
 
@@ -83,7 +83,7 @@ public abstract class Navigator {
     getActivity().overridePendingTransition(inAnimation, outAnimation);
   }
 
-  public final void startActivity(@NonNull Class<? extends Activity> activityClass, Bundle args) {
+  public void startActivity(@NonNull Class<? extends Activity> activityClass, Bundle args) {
     Activity activity = getActivity();
     Intent intent = new Intent(activity, activityClass);
     if (args != null) {

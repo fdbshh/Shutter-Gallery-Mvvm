@@ -1,3 +1,4 @@
+app/response_cache
 .idea
 *.iml
 .gradle

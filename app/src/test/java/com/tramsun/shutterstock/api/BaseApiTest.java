@@ -1,19 +1,16 @@
-package com.tramsun.shutterstock;
+package com.tramsun.shutterstock.api;
 
 import android.support.annotation.CallSuper;
 import com.tramsun.shutterstock.dagger.components.DaggerTestAppComponent;
-import com.tramsun.shutterstock.dagger.components.TestAppComponent;
 import com.tramsun.shutterstock.remote.ShutterRepository;
 import javax.inject.Inject;
 
-public class BaseTest {
-  private TestAppComponent testComponent;
+public class BaseApiTest {
 
   @Inject ShutterRepository repository;
 
-  BaseTest() {
-    testComponent = DaggerTestAppComponent.builder().build();
-    testComponent.inject(this);
+  BaseApiTest() {
+    DaggerTestAppComponent.builder().build().inject(this);
   }
 
   @CallSuper public void setUp() {

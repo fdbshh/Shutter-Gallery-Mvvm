@@ -50,6 +50,10 @@ import timber.log.Timber;
     return images;
   }
 
+  @VisibleForTesting public int getCurrentPage() {
+    return currentPage;
+  }
+
   @VisibleForTesting
   public void clear() {
     currentPage = 0;

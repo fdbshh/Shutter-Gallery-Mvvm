@@ -1,6 +1,7 @@
 package com.tramsun.shutterstock.feature.launch;
 
 import android.view.View;
+import com.android.annotations.VisibleForTesting;
 import com.tramsun.shutterstock.R;
 import com.tramsun.shutterstock.dagger.scope.ActivityScope;
 import com.tramsun.shutterstock.feature.base.BaseViewModel;
@@ -14,9 +15,10 @@ import rx.Subscription;
 import timber.log.Timber;
 
 @ActivityScope public class LaunchViewModel extends BaseViewModel {
-  private boolean animationDone = false;
-  private boolean workDone = false;
-  private boolean workSuccess = false;
+
+  @VisibleForTesting boolean animationDone = false;
+  @VisibleForTesting boolean workDone = false;
+  @VisibleForTesting boolean workSuccess = false;
 
   @Inject ShutterRepository repository;
   @Inject UiModule ui;
@@ -62,7 +64,7 @@ import timber.log.Timber;
     goToNextScreen();
   }
 
-  public int isProgressBarVisible() {
+  public int getProgressBarVisibility() {
     return animationDone && !workDone ? View.VISIBLE : View.INVISIBLE;
   }
 }
