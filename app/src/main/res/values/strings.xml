@@ -3,4 +3,6 @@
   <string name="failed_to_fetch_images">Failed to fetch images</string>
   <string name="failed_to_fetch_image">Failed to fetch image</string>
   <string name="fetching_image">Fetching Image..</string>
+  <string name="downloading">Downloading..</string>
+  <string name="download_failed">Download Failed</string>
 </resources>

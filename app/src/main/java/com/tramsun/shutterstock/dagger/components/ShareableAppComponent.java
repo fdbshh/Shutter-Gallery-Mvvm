@@ -2,6 +2,7 @@ package com.tramsun.shutterstock.dagger.components;
 
 import com.squareup.picasso.Picasso;
 import com.tramsun.shutterstock.remote.ShutterRepository;
+import com.tramsun.shutterstock.utils.StorageManager;
 import okhttp3.OkHttpClient;
 
 interface ShareableAppComponent {
@@ -11,4 +12,6 @@ interface ShareableAppComponent {
   Picasso providePicasso();
 
   OkHttpClient provideOkHttpClient();
+
+  StorageManager provideStorageManager();
 }

@@ -2,7 +2,9 @@ package com.tramsun.shutterstock.feature.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
+import android.widget.Toast;
 import com.tramsun.shutterstock.dagger.scope.ActivityScope;
 import javax.inject.Inject;
 
@@ -43,5 +45,9 @@ import javax.inject.Inject;
       progressDialog.dismiss();
       progressDialog = null;
     }
+  }
+
+  public void showToast(@StringRes int stringId) {
+    Toast.makeText(activity, stringId, Toast.LENGTH_LONG).show();
   }
 }
