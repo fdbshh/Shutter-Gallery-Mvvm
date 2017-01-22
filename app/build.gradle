@@ -13,6 +13,15 @@ android {
   compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
   buildToolsVersion rootProject.ext.BUILD_TOOLS_VERSION
 
+  signingConfigs {
+    release {
+      keyAlias 'shutter-app'
+      keyPassword 'nupQcuuYsY#&N1p6'
+      storeFile file('keystore/shutter-release.jks')
+      storePassword 'nupQcuuYsY#&N1p6'
+    }
+  }
+
   defaultConfig {
     applicationId "com.tramsun.shutterstock"
 
@@ -41,8 +50,9 @@ android {
 
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.release
     }
   }
 
