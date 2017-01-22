@@ -4,6 +4,7 @@ import android.content.Context;
 import com.squareup.picasso.Picasso;
 import com.tramsun.shutterstock.ShutterApp;
 import com.tramsun.shutterstock.dagger.qualifier.ApplicationContext;
+import com.tramsun.shutterstock.utils.ImageDownloader;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
@@ -21,6 +22,10 @@ import org.mockito.Mockito;
   }
 
   @Provides @Singleton Picasso providePicasso() {
-    return Mockito.mock(Picasso.class);
+    return null;
+  }
+
+  @Provides @Singleton ImageDownloader provideImageDownloader() {
+    return Mockito.mock(ImageDownloader.class);
   }
 }
