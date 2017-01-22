@@ -26,7 +26,7 @@ public abstract class BaseViewModelTest<T extends BaseViewModel> {
   @Before @CallSuper public void setUp() {
     UnitTestAppComponent appComponent = DaggerUnitTestAppComponent.builder().build();
     UnitTestActivityComponent activityComponent =
-        DaggerUnitTestActivityComponent.builder().testAppComponent(appComponent).build();
+        DaggerUnitTestActivityComponent.builder().unitTestAppComponent(appComponent).build();
 
     onComponentCreated(activityComponent);
 

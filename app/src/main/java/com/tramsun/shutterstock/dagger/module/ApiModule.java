@@ -16,7 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Module public final class ApiModule {
+@Module public class ApiModule {
   private static final int NETWORK_REQUEST_TIMEOUT_SECONDS = 5;
   private static final String RESPONSE_CACHE_DIRECTORY = "response_cache";
   private static final long CACHE_SIZE = 10 * 1024 * 1024;
