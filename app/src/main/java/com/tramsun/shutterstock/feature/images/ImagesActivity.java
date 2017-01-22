@@ -15,7 +15,7 @@ import com.tramsun.shutterstock.feature.base.BaseActivity;
 import com.tramsun.shutterstock.feature.detail.ImageDetailActivity;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
 import com.tramsun.shutterstock.ui.GridSpacingItemDecoration;
-import com.tramsun.shutterstock.utils.rx.BgSingleOperation;
+import com.tramsun.shutterstock.utils.rx.BgOperation;
 import javax.inject.Inject;
 import rx.Single;
 import rx.Subscription;
@@ -72,7 +72,7 @@ public class ImagesActivity extends BaseActivity<ImagesActivityBinding, ImagesVi
           return;
         }
 
-        Subscription subscription = call.compose(new BgSingleOperation<>())
+        Subscription subscription = call.compose(new BgOperation<>())
             .doOnSubscribe(() -> adapter.showProgressBar(true))
             .doAfterTerminate(() -> adapter.showProgressBar(false))
             .subscribe(success -> onFetchDataCompleted(success, firstVisibleItemPosition));

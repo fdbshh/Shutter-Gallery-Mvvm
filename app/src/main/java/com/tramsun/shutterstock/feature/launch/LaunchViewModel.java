@@ -9,7 +9,7 @@ import com.tramsun.shutterstock.feature.base.UiModule;
 import com.tramsun.shutterstock.feature.base.navigator.Navigator;
 import com.tramsun.shutterstock.feature.images.ImagesActivity;
 import com.tramsun.shutterstock.remote.ShutterRepository;
-import com.tramsun.shutterstock.utils.rx.BgSingleOperation;
+import com.tramsun.shutterstock.utils.rx.BgOperation;
 import javax.inject.Inject;
 import rx.Subscription;
 import timber.log.Timber;
@@ -29,7 +29,7 @@ import timber.log.Timber;
 
   @Override public void resume() {
     Subscription subscription =
-        repository.fetchFirstImageSet().compose(new BgSingleOperation<>()).subscribe(success -> {
+        repository.fetchFirstImageSet().compose(new BgOperation<>()).subscribe(success -> {
           workDone = true;
           notifyChange();
 
