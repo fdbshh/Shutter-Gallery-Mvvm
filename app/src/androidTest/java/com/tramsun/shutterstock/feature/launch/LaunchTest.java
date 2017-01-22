@@ -1,17 +1,18 @@
 package com.tramsun.shutterstock.feature.launch;
 
-import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 import com.tramsun.shutterstock.R;
 import com.tramsun.shutterstock.feature.base.BaseTest;
+import com.tramsun.shutterstock.feature.images.ImagesActivity;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static com.tramsun.shutterstock.utils.CustomMatchers.withAlpha;
@@ -19,14 +20,14 @@ import static com.tramsun.shutterstock.utils.CustomMatchers.withScale;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 
-@RunWith(AndroidJUnit4.class) public class LaunchTest extends BaseTest {
+public class LaunchTest extends BaseTest {
 
-  @Rule public ActivityTestRule<LaunchActivity> mActivityRule =
+  @Rule public ActivityTestRule<LaunchActivity> activityTestRule =
       new ActivityTestRule<>(LaunchActivity.class);
 
   @Test public void verifyInitialState() throws Exception {
 
-    onView(ViewMatchers.withId(R.id.activity_launch)).check(matches(isDisplayed()));
+    onView(withId(R.id.activity_launch)).check(matches(isDisplayed()));
 
     onView(withId(R.id.logo_container)).check(matches(isDisplayed()));
 
@@ -46,7 +47,9 @@ import static org.hamcrest.CoreMatchers.not;
 
   @Test public void verifyTitleAlpha() throws Exception {
 
-    verifyLogoScale();
+    Thread.sleep(LaunchActivity.ANIMATION_DURATION);
+
+    onView(withId(R.id.logo_container)).check(matches(withScale(equalTo(2f))));
 
     Thread.sleep(LaunchActivity.ANIMATION_DURATION / 2);
 
@@ -55,5 +58,19 @@ import static org.hamcrest.CoreMatchers.not;
 
   @Test public void verifyImagesScreenLaunch() throws Exception {
 
+    Thread.sleep(LaunchActivity.ANIMATION_DURATION * 3);
+
+    intended(hasComponent(ImagesActivity.class.getName()));
+  }
+
+  @Test public void verifyImagesScreenNotLaunchIfQuitBeforeCompletion() throws Exception {
+
+    Thread.sleep(LaunchActivity.ANIMATION_DURATION);
+
+    activityTestRule.getActivity().finish();
+
+    Thread.sleep(LaunchActivity.ANIMATION_DURATION * 2);
+
+    Intents.times(0);
   }
 }

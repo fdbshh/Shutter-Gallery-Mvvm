@@ -2,17 +2,26 @@ package com.tramsun.shutterstock.feature.base;
 
 import android.app.Instrumentation;
 import android.content.Context;
+import android.support.annotation.CallSuper;
 import android.support.test.InstrumentationRegistry;
-import com.tramsun.shutterstock.ShutterApp;
+import android.support.test.espresso.intent.Intents;
+import org.junit.After;
+import org.junit.Before;
 
 public class BaseTest {
-  public static Context getContext() {
-    Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-    return instrumentation.getTargetContext();
+  @CallSuper @Before public void setUp() {
+    Intents.init();
   }
 
-  protected static ShutterApp getApplication() {
+  @CallSuper @After public void tearDown() throws InterruptedException {
+    Intents.release();
+
+    // Destroy time
+    Thread.sleep(1000);
+  }
+
+  protected static Context getContext() {
     Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-    return (ShutterApp) instrumentation.getTargetContext().getApplicationContext();
+    return instrumentation.getTargetContext();
   }
 }

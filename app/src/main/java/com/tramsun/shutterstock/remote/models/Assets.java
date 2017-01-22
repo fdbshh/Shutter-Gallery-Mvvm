@@ -1,6 +1,5 @@
 package com.tramsun.shutterstock.remote.models;
 
-import android.os.Parcel;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
@@ -9,9 +8,6 @@ public class Assets implements Serializable {
   @SerializedName("preview") private Preview preview;
   @SerializedName("small_thumb") private SmallThumb smallThumb;
   @SerializedName("large_thumb") private LargeThumb largeThumb;
-
-  protected Assets(Parcel in) {
-  }
 
   public Preview getPreview() {
     return preview;

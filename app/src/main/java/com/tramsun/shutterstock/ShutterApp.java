@@ -8,10 +8,14 @@ public class ShutterApp extends Application {
   @Override public void onCreate() {
     super.onCreate();
 
-    DaggerComponentManager.init(this);
+    initDagger();
 
     if (BuildConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
     }
+  }
+
+  protected void initDagger() {
+    DaggerComponentManager.init(this);
   }
 }

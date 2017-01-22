@@ -25,6 +25,7 @@ public class ImageDetailActivity extends BaseActivity<ImageDetailBinding, ImageD
 
     binding.imageDetail.setMaxScale(10f);
     binding.imageDetail.setDoubleTapZoomScale(10f);
+
     ShutterImage image = (ShutterImage) getIntent().getSerializableExtra(INTENT_ARG_IMAGE);
     viewModel.setImage(image);
   }

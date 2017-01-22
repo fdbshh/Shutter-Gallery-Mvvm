@@ -73,6 +73,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends ViewMode
     subscriptions.unsubscribe();
 
     viewModel.detach();
+    viewModel = null;
 
     ui.destroy();
   }

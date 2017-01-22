@@ -8,15 +8,21 @@ import com.tramsun.shutterstock.dagger.components.AppComponent;
 import com.tramsun.shutterstock.dagger.components.DaggerActivityComponent;
 import com.tramsun.shutterstock.dagger.components.DaggerAppComponent;
 import com.tramsun.shutterstock.dagger.module.ActivityModule;
+import com.tramsun.shutterstock.dagger.module.ApiModule;
 import com.tramsun.shutterstock.dagger.module.AppModule;
 
 public class DaggerComponentManager {
   private static AppComponent component;
 
   public static void init(ShutterApp app) {
+    init(app, new ApiModule());
+  }
+
+  public static void init(ShutterApp app, ApiModule apiModule) {
     if (component != null) return;
 
-    component = DaggerAppComponent.builder().appModule(new AppModule(app)).build();
+    component =
+        DaggerAppComponent.builder().appModule(new AppModule(app)).apiModule(apiModule).build();
 
     component.inject(app);
   }

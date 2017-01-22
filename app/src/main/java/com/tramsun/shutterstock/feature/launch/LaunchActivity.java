@@ -19,18 +19,19 @@ public class LaunchActivity extends BaseActivity<LaunchActivityBinding, LaunchVi
 
   private void animateLogo() {
     binding.logoContainer.animate()
-        .scaleX(2f)
-        .scaleY(2f).setDuration(ANIMATION_DURATION)
+        .scaleX(2f).scaleY(2f).setDuration(ANIMATION_DURATION)
         .setInterpolator(new AccelerateDecelerateInterpolator())
         .withEndAction(this::animateAppName)
         .start();
   }
 
   private void animateAppName() {
-    binding.appName.animate()
-        .alpha(1).setDuration(ANIMATION_DURATION)
-        .setInterpolator(new AccelerateDecelerateInterpolator())
-        .withEndAction(viewModel::onAnimationDone)
+    binding.appName.animate().alpha(1).setDuration(ANIMATION_DURATION)
+        .setInterpolator(new AccelerateDecelerateInterpolator()).withEndAction(() -> {
+      if (viewModel != null) {
+        viewModel.onAnimationDone();
+      }
+    })
         .start();
   }
 
