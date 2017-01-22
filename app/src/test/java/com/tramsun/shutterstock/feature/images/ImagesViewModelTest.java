@@ -1,7 +1,7 @@
 package com.tramsun.shutterstock.feature.images;
 
 import com.tramsun.shutterstock.AppConstants;
-import com.tramsun.shutterstock.dagger.components.TestActivityComponent;
+import com.tramsun.shutterstock.dagger.components.UnitTestActivityComponent;
 import com.tramsun.shutterstock.feature.base.BaseViewModelTest;
 import java.util.Random;
 import org.junit.Test;
@@ -12,7 +12,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class ImagesViewModelTest extends BaseViewModelTest<ImagesViewModel> {
 
-  @Override protected void onComponentCreated(TestActivityComponent activityComponent) {
+  @Override protected void onComponentCreated(UnitTestActivityComponent activityComponent) {
     activityComponent.inject(this);
   }
 

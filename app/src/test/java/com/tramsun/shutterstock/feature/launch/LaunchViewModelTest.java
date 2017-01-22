@@ -1,7 +1,7 @@
 package com.tramsun.shutterstock.feature.launch;
 
 import android.view.View;
-import com.tramsun.shutterstock.dagger.components.TestActivityComponent;
+import com.tramsun.shutterstock.dagger.components.UnitTestActivityComponent;
 import com.tramsun.shutterstock.feature.base.BaseViewModelTest;
 import com.tramsun.shutterstock.feature.images.ImagesActivity;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 
 public class LaunchViewModelTest extends BaseViewModelTest<LaunchViewModel> {
 
-  @Override protected void onComponentCreated(TestActivityComponent activityComponent) {
+  @Override protected void onComponentCreated(UnitTestActivityComponent activityComponent) {
     activityComponent.inject(this);
   }
 

@@ -7,6 +7,6 @@ import dagger.Component;
 import javax.inject.Singleton;
 
 @Singleton @Component(modules = { TestAppModule.class, ApiModule.class })
-public interface TestAppComponent extends ShareableAppComponent {
+public interface UnitTestAppComponent extends ShareableAppComponent {
   void inject(BaseApiTest baseApiTest);
 }

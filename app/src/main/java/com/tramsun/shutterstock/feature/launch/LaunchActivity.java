@@ -9,6 +9,7 @@ import com.tramsun.shutterstock.databinding.LaunchActivityBinding;
 import com.tramsun.shutterstock.feature.base.BaseActivity;
 
 public class LaunchActivity extends BaseActivity<LaunchActivityBinding, LaunchViewModel> {
+  public static final int ANIMATION_DURATION = 500;
 
   @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
@@ -19,8 +20,7 @@ public class LaunchActivity extends BaseActivity<LaunchActivityBinding, LaunchVi
   private void animateLogo() {
     binding.logoContainer.animate()
         .scaleX(2f)
-        .scaleY(2f)
-        .setDuration(500)
+        .scaleY(2f).setDuration(ANIMATION_DURATION)
         .setInterpolator(new AccelerateDecelerateInterpolator())
         .withEndAction(this::animateAppName)
         .start();
@@ -28,8 +28,7 @@ public class LaunchActivity extends BaseActivity<LaunchActivityBinding, LaunchVi
 
   private void animateAppName() {
     binding.appName.animate()
-        .alpha(1)
-        .setDuration(500)
+        .alpha(1).setDuration(ANIMATION_DURATION)
         .setInterpolator(new AccelerateDecelerateInterpolator())
         .withEndAction(viewModel::onAnimationDone)
         .start();

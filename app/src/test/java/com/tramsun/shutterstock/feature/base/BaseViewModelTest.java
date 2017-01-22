@@ -2,10 +2,10 @@ package com.tramsun.shutterstock.feature.base;
 
 import android.databinding.Observable;
 import android.support.annotation.CallSuper;
-import com.tramsun.shutterstock.dagger.components.DaggerTestActivityComponent;
-import com.tramsun.shutterstock.dagger.components.DaggerTestAppComponent;
-import com.tramsun.shutterstock.dagger.components.TestActivityComponent;
-import com.tramsun.shutterstock.dagger.components.TestAppComponent;
+import com.tramsun.shutterstock.dagger.components.DaggerUnitTestActivityComponent;
+import com.tramsun.shutterstock.dagger.components.DaggerUnitTestAppComponent;
+import com.tramsun.shutterstock.dagger.components.UnitTestActivityComponent;
+import com.tramsun.shutterstock.dagger.components.UnitTestAppComponent;
 import com.tramsun.shutterstock.utils.RxTestUtils;
 import javax.inject.Inject;
 import org.junit.After;
@@ -24,9 +24,9 @@ public abstract class BaseViewModelTest<T extends BaseViewModel> {
   private Observable.OnPropertyChangedCallback onPropertyChangedCallback;
 
   @Before @CallSuper public void setUp() {
-    TestAppComponent appComponent = DaggerTestAppComponent.builder().build();
-    TestActivityComponent activityComponent =
-        DaggerTestActivityComponent.builder().testAppComponent(appComponent).build();
+    UnitTestAppComponent appComponent = DaggerUnitTestAppComponent.builder().build();
+    UnitTestActivityComponent activityComponent =
+        DaggerUnitTestActivityComponent.builder().testAppComponent(appComponent).build();
 
     onComponentCreated(activityComponent);
 
@@ -47,5 +47,5 @@ public abstract class BaseViewModelTest<T extends BaseViewModel> {
     RxTestUtils.initTestSchedulers();
   }
 
-  protected abstract void onComponentCreated(TestActivityComponent activityComponent);
+  protected abstract void onComponentCreated(UnitTestActivityComponent activityComponent);
 }

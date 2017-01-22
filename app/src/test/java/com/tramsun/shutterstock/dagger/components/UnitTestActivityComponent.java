@@ -8,8 +8,8 @@ import com.tramsun.shutterstock.feature.launch.LaunchViewModelTest;
 import dagger.Component;
 
 @ActivityScope
-@Component(dependencies = TestAppComponent.class, modules = { TestActivityModule.class })
-public interface TestActivityComponent {
+@Component(dependencies = UnitTestAppComponent.class, modules = { TestActivityModule.class })
+public interface UnitTestActivityComponent {
   void inject(LaunchViewModelTest launchViewModelTest);
 
   void inject(ImagesViewModelTest imagesViewModelTest);
