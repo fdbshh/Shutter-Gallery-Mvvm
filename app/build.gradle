@@ -4,7 +4,6 @@ def versionPatch = 0
 def versionBuild = 0
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 def androidId = System.getProperty("deviceId")
@@ -89,8 +88,8 @@ dependencies {
 
   //Dagger 2
   compile 'com.google.dagger:dagger:2.8'
-  apt 'com.google.dagger:dagger-compiler:2.8'
-  apt 'com.google.guava:guava:21.0'
+  annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+  annotationProcessor 'com.google.guava:guava:21.0'
 
   // Retrofit
   compile "com.squareup.retrofit2:retrofit:${rootProject.ext.RETROFIT_VERSION}"
@@ -120,18 +119,24 @@ dependencies {
   // Logging
   compile "com.jakewharton.timber:timber:${rootProject.ext.TIMBER_VERSION}"
 
-  testApt 'com.google.dagger:dagger-compiler:2.8'
+  testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:2.6.3'
   testCompile "com.google.truth:truth:0.31"
 
-  androidTestApt 'com.google.dagger:dagger-compiler:2.8'
+  androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   androidTestCompile 'org.mockito:mockito-core:2.6.3'
-  androidTestCompile "com.android.support.test.espresso:espresso-intents:${rootProject.ext.ESPRESSO}"
+  androidTestCompile("com.android.support.test.espresso:espresso-intents:${rootProject.ext.ESPRESSO}") {
+    exclude group: 'com.android.support', module: 'design'
+    exclude group: 'com.android.support', module: 'appcompat-v7'
+    exclude group: 'com.android.support', module: 'appcompat'
+    exclude group: 'com.android.support', module: 'support-v4'
+    exclude group: 'com.android.support', module: 'support-annotations'
+    exclude module: 'recyclerview-v7'
+  }
 
   androidTestCompile(
       "com.android.support.test.espresso:espresso-contrib:${rootProject.ext.ESPRESSO}") {
-    // Necessary to avoid version conflicts
     exclude group: 'com.android.support', module: 'design'
     exclude group: 'com.android.support', module: 'appcompat-v7'
     exclude group: 'com.android.support', module: 'appcompat'
@@ -141,6 +146,11 @@ dependencies {
   }
   androidTestCompile("com.android.support.test.espresso:espresso-core:${rootProject.ext.ESPRESSO}",
       {
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
       })
 }
