@@ -126,7 +126,8 @@ dependencies {
 
   androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   androidTestCompile 'org.mockito:mockito-core:2.6.3'
-  androidTestCompile("com.android.support.test.espresso:espresso-intents:${rootProject.ext.ESPRESSO}") {
+  androidTestCompile(
+      "com.android.support.test.espresso:espresso-intents:${rootProject.ext.ESPRESSO}") {
     exclude group: 'com.android.support', module: 'design'
     exclude group: 'com.android.support', module: 'appcompat-v7'
     exclude group: 'com.android.support', module: 'appcompat'
@@ -144,13 +145,13 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
     exclude module: 'recyclerview-v7'
   }
-  androidTestCompile("com.android.support.test.espresso:espresso-core:${rootProject.ext.ESPRESSO}",
-      {
-        exclude group: 'com.android.support', module: 'design'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-annotations'
-        exclude module: 'recyclerview-v7'
-      })
+  androidTestCompile(
+      "com.android.support.test.espresso:espresso-core:${rootProject.ext.ESPRESSO}") {
+    exclude group: 'com.android.support', module: 'design'
+    exclude group: 'com.android.support', module: 'appcompat-v7'
+    exclude group: 'com.android.support', module: 'appcompat'
+    exclude group: 'com.android.support', module: 'support-v4'
+    exclude group: 'com.android.support', module: 'support-annotations'
+    exclude module: 'recyclerview-v7'
+  }
 }
