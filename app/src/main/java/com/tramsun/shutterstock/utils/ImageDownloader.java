@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+import io.reactivex.Single;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import rx.Single;
 
 @Singleton public class ImageDownloader {
 
@@ -16,20 +16,18 @@ import rx.Single;
   }
 
   public Single<Bitmap> download(String imageUrl) {
-    return Single.fromEmitter(emitter -> {
-      picasso.load(imageUrl).into(new Target() {
+    return Single.create(emitter -> picasso.load(imageUrl).into(new Target() {
 
-        @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-          emitter.onSuccess(bitmap);
-        }
+      @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+        emitter.onSuccess(bitmap);
+      }
 
-        @Override public void onBitmapFailed(Drawable errorDrawable) {
-          emitter.onError(new RuntimeException("Download failed"));
-        }
+      @Override public void onBitmapFailed(Drawable errorDrawable) {
+        emitter.onError(new RuntimeException("Download failed"));
+      }
 
-        @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
-        }
-      });
-    });
+      @Override public void onPrepareLoad(Drawable placeHolderDrawable) {
+      }
+    }));
   }
 }

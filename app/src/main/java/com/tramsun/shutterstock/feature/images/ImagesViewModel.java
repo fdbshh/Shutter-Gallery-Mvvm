@@ -5,10 +5,10 @@ import com.tramsun.shutterstock.dagger.scope.ActivityScope;
 import com.tramsun.shutterstock.feature.base.BaseViewModel;
 import com.tramsun.shutterstock.remote.ShutterRepository;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
+import io.reactivex.Single;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.inject.Inject;
-import rx.Single;
 
 @ActivityScope public class ImagesViewModel extends BaseViewModel {
   @Inject ShutterRepository repository;

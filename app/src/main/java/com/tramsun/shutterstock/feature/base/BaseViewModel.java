@@ -3,7 +3,7 @@ package com.tramsun.shutterstock.feature.base;
 import android.databinding.BaseObservable;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class BaseViewModel<T extends MvvmView> extends BaseObservable implements ViewModel<T> {
 
@@ -13,7 +13,7 @@ public class BaseViewModel<T extends MvvmView> extends BaseObservable implements
     return view;
   }
 
-  protected CompositeSubscription subscriptions = new CompositeSubscription();
+  protected CompositeDisposable disposables = new CompositeDisposable();
 
   // Never override both attach() and attach(T view)
   @Override public void attach() {
@@ -33,7 +33,10 @@ public class BaseViewModel<T extends MvvmView> extends BaseObservable implements
   }
 
   @CallSuper @Override public void detach() {
-    subscriptions.unsubscribe();
+    if (disposables != null) {
+      disposables.dispose();
+      disposables = null;
+    }
   }
 
   @Override public void restoreInstanceState(Bundle savedInstanceState) {

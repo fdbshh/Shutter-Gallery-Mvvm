@@ -10,8 +10,8 @@ import android.view.MenuItem;
 import com.tramsun.shutterstock.BR;
 import com.tramsun.shutterstock.dagger.DaggerComponentManager;
 import com.tramsun.shutterstock.dagger.components.ActivityComponent;
+import io.reactivex.disposables.CompositeDisposable;
 import javax.inject.Inject;
-import rx.subscriptions.CompositeSubscription;
 
 public abstract class BaseActivity<B extends ViewDataBinding, V extends ViewModel>
     extends AppCompatActivity {
@@ -22,7 +22,7 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends ViewMode
 
   protected B binding;
 
-  protected CompositeSubscription subscriptions = new CompositeSubscription();
+  protected CompositeDisposable disposables = new CompositeDisposable();
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -70,7 +70,10 @@ public abstract class BaseActivity<B extends ViewDataBinding, V extends ViewMode
   @Override protected void onDestroy() {
     super.onDestroy();
 
-    subscriptions.unsubscribe();
+    if (disposables != null) {
+      disposables.dispose();
+      disposables = null;
+    }
 
     viewModel.detach();
     viewModel = null;

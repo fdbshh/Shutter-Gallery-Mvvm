@@ -3,11 +3,11 @@ package com.tramsun.shutterstock.remote;
 import android.support.annotation.VisibleForTesting;
 import com.tramsun.shutterstock.AppConstants;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
+import io.reactivex.Single;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import rx.Single;
 import timber.log.Timber;
 
 @Singleton public class ShutterRepository {
@@ -23,7 +23,7 @@ import timber.log.Timber;
   }
 
   public Single<Boolean> fetchFirstImageSet() {
-    return fetchPage(1).doOnSubscribe(this::clear);
+    return fetchPage(1).doOnSubscribe(disposable -> clear());
   }
 
   public Single<Boolean> fetchNextPage() {
@@ -54,8 +54,7 @@ import timber.log.Timber;
     return currentPage;
   }
 
-  @VisibleForTesting
-  public void clear() {
+  @VisibleForTesting public void clear() {
     currentPage = 0;
     images.clear();
   }

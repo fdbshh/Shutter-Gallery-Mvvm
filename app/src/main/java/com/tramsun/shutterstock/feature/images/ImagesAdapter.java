@@ -137,14 +137,14 @@ class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.BaseViewHolder> {
     return images.size();
   }
 
-  class BaseViewHolder extends RecyclerView.ViewHolder {
+  static class BaseViewHolder extends RecyclerView.ViewHolder {
 
     BaseViewHolder(View itemView) {
       super(itemView);
     }
   }
 
-  class ItemViewHolder extends BaseViewHolder {
+  private static class ItemViewHolder extends BaseViewHolder {
 
     private final ImageThumbBinding binding;
 

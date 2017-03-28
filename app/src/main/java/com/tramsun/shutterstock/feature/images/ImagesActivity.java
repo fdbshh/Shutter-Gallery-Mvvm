@@ -16,9 +16,9 @@ import com.tramsun.shutterstock.feature.detail.ImageDetailActivity;
 import com.tramsun.shutterstock.remote.models.ShutterImage;
 import com.tramsun.shutterstock.ui.GridSpacingItemDecoration;
 import com.tramsun.shutterstock.utils.rx.BgOperation;
+import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 import javax.inject.Inject;
-import rx.Single;
-import rx.Subscription;
 import timber.log.Timber;
 
 import static com.tramsun.shutterstock.AppConstants.PER_PAGE_SIZE;
@@ -72,12 +72,12 @@ public class ImagesActivity extends BaseActivity<ImagesActivityBinding, ImagesVi
           return;
         }
 
-        Subscription subscription = call.compose(new BgOperation<>())
-            .doOnSubscribe(() -> adapter.showProgressBar(true))
+        adapter.showProgressBar(true);
+        Disposable disposable = call.compose(new BgOperation<>())
             .doAfterTerminate(() -> adapter.showProgressBar(false))
             .subscribe(success -> onFetchDataCompleted(success, firstVisibleItemPosition));
 
-        subscriptions.add(subscription);
+        disposables.add(disposable);
       }
     });
   }

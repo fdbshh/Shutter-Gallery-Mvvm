@@ -1,7 +1,7 @@
 package com.tramsun.shutterstock.feature.launch;
 
+import android.support.annotation.VisibleForTesting;
 import android.view.View;
-import com.android.annotations.VisibleForTesting;
 import com.tramsun.shutterstock.R;
 import com.tramsun.shutterstock.dagger.scope.ActivityScope;
 import com.tramsun.shutterstock.feature.base.BaseViewModel;
@@ -10,8 +10,8 @@ import com.tramsun.shutterstock.feature.base.navigator.Navigator;
 import com.tramsun.shutterstock.feature.images.ImagesActivity;
 import com.tramsun.shutterstock.remote.ShutterRepository;
 import com.tramsun.shutterstock.utils.rx.BgOperation;
+import io.reactivex.disposables.Disposable;
 import javax.inject.Inject;
-import rx.Subscription;
 import timber.log.Timber;
 
 @ActivityScope public class LaunchViewModel extends BaseViewModel {
@@ -28,7 +28,7 @@ import timber.log.Timber;
   }
 
   @Override public void resume() {
-    Subscription subscription =
+    Disposable disposable =
         repository.fetchFirstImageSet().compose(new BgOperation<>()).subscribe(success -> {
           workDone = true;
           notifyChange();
@@ -42,7 +42,7 @@ import timber.log.Timber;
           }
         });
 
-    subscriptions.add(subscription);
+    disposables.add(disposable);
   }
 
   private void goToNextScreen() {

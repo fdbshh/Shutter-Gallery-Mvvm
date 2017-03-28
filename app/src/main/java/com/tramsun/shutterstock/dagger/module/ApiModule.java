@@ -13,7 +13,7 @@ import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module public class ApiModule {
@@ -43,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
   @Provides @Singleton Retrofit providesRetrofit(OkHttpClient okHttpClient) {
     return new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
         .baseUrl(BuildConfig.SHUTTERSTOCK_BASE_URL)
         .build();

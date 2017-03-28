@@ -9,8 +9,8 @@ apply plugin: 'me.tatarka.retrolambda'
 def androidId = System.getProperty("deviceId")
 
 android {
-  compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
-  buildToolsVersion rootProject.ext.BUILD_TOOLS_VERSION
+  compileSdkVersion COMPILE_SDK_VERSION
+  buildToolsVersion BUILD_TOOLS_VERSION
 
   signingConfigs {
     release {
@@ -24,8 +24,8 @@ android {
   defaultConfig {
     applicationId "com.tramsun.shutterstock"
 
-    minSdkVersion rootProject.ext.MIN_SDK_VERSION
-    targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+    minSdkVersion MIN_SDK_VERSION
+    targetSdkVersion TARGET_SDK_VERSION
 
     versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
     versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -82,9 +82,9 @@ dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
   // Android Support Libs
-  compile "com.android.support:support-v13:${rootProject.ext.SUPPORT_LIB_VERSION}"
-  compile "com.android.support:appcompat-v7:${rootProject.ext.SUPPORT_LIB_VERSION}"
-  compile "com.android.support:design:${rootProject.ext.SUPPORT_LIB_VERSION}"
+  compile "com.android.support:support-v13:${SUPPORT_LIB_VERSION}"
+  compile "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+  compile "com.android.support:design:${SUPPORT_LIB_VERSION}"
 
   //Dagger 2
   compile 'com.google.dagger:dagger:2.8'
@@ -92,20 +92,20 @@ dependencies {
   annotationProcessor 'com.google.guava:guava:21.0'
 
   // Retrofit
-  compile "com.squareup.retrofit2:retrofit:${rootProject.ext.RETROFIT_VERSION}"
-  compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.RETROFIT_VERSION}"
-  compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.RETROFIT_VERSION}"
+  compile "com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}"
+  compile "com.squareup.retrofit2:converter-gson:${RETROFIT_VERSION}"
+  compile "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
 
   // OkHttp
-  compile "com.squareup.okhttp3:okhttp:${rootProject.ext.OKHTTP_VERSION}"
-  compile "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.OKHTTP_VERSION}"
+  compile "com.squareup.okhttp3:okhttp:${OKHTTP_VERSION}"
+  compile "com.squareup.okhttp3:logging-interceptor:${OKHTTP_VERSION}"
 
   // RxJava
-  compile "io.reactivex:rxjava:${rootProject.ext.RXJAVA_VERSION}"
-  compile "io.reactivex:rxandroid:${rootProject.ext.RXANDROID_VERSION}"
+  compile "io.reactivex.rxjava2:rxjava:${RXJAVA_VERSION}"
+  compile "io.reactivex.rxjava2:rxandroid:${RXANDROID_VERSION}"
 
   // Marshmallow Permissions
-  compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
+  compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
 
   // Image Loading
   compile 'com.squareup.picasso:picasso:2.5.2'
@@ -117,7 +117,7 @@ dependencies {
   compile 'com.github.pwittchen:infinitescroll:0.0.1'
 
   // Logging
-  compile "com.jakewharton.timber:timber:${rootProject.ext.TIMBER_VERSION}"
+  compile "com.jakewharton.timber:timber:${TIMBER_VERSION}"
 
   testAnnotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   testCompile 'junit:junit:4.12'
@@ -126,8 +126,7 @@ dependencies {
 
   androidTestAnnotationProcessor 'com.google.dagger:dagger-compiler:2.8'
   androidTestCompile 'org.mockito:mockito-core:2.6.3'
-  androidTestCompile(
-      "com.android.support.test.espresso:espresso-intents:${rootProject.ext.ESPRESSO}") {
+  androidTestCompile("com.android.support.test.espresso:espresso-intents:${ESPRESSO}") {
     exclude group: 'com.android.support', module: 'design'
     exclude group: 'com.android.support', module: 'appcompat-v7'
     exclude group: 'com.android.support', module: 'appcompat'
@@ -136,8 +135,7 @@ dependencies {
     exclude module: 'recyclerview-v7'
   }
 
-  androidTestCompile(
-      "com.android.support.test.espresso:espresso-contrib:${rootProject.ext.ESPRESSO}") {
+  androidTestCompile("com.android.support.test.espresso:espresso-contrib:${ESPRESSO}") {
     exclude group: 'com.android.support', module: 'design'
     exclude group: 'com.android.support', module: 'appcompat-v7'
     exclude group: 'com.android.support', module: 'appcompat'
@@ -145,8 +143,7 @@ dependencies {
     exclude group: 'com.android.support', module: 'support-annotations'
     exclude module: 'recyclerview-v7'
   }
-  androidTestCompile(
-      "com.android.support.test.espresso:espresso-core:${rootProject.ext.ESPRESSO}") {
+  androidTestCompile("com.android.support.test.espresso:espresso-core:${ESPRESSO}") {
     exclude group: 'com.android.support', module: 'design'
     exclude group: 'com.android.support', module: 'appcompat-v7'
     exclude group: 'com.android.support', module: 'appcompat'
